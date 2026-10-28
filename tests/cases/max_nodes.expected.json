@@ -1,0 +1,92 @@
+[
+  {
+    "ok": true,
+    "max_nodes": 3
+  },
+  {
+    "ok": true,
+    "structures": {
+      "stack": [
+        {
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "stack": [
+        {
+          "value": 2
+        },
+        {
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "stack": [
+        {
+          "value": 3
+        },
+        {
+          "value": 2
+        },
+        {
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "ok": false,
+    "error": "E_FULL"
+  },
+  {
+    "ok": false,
+    "error": "E_FULL"
+  },
+  {
+    "ok": false,
+    "error": "E_FULL"
+  },
+  {
+    "ok": true,
+    "structures": {
+      "collatz": [
+        {
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "ok": false,
+    "error": "E_FULL"
+  },
+  {
+    "ok": true,
+    "structures": {
+      "collatz": [
+        {
+          "value": 1
+        }
+      ],
+      "stack": [
+        {
+          "value": 3
+        },
+        {
+          "value": 2
+        },
+        {
+          "value": 1
+        }
+      ]
+    }
+  }
+]

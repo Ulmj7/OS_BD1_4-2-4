@@ -1,0 +1,140 @@
+[
+  {
+    "ok": true
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE"
+  },
+  {
+    "ok": false,
+    "error": "E_EMPTY"
+  },
+  {
+    "ok": false,
+    "error": "E_EMPTY"
+  },
+  {
+    "ok": false,
+    "error": "E_EMPTY"
+  },
+  {
+    "ok": false,
+    "error": "E_EMPTY"
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE|E_EMPTY"
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ]
+    }
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE"
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE"
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE"
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE"
+  },
+  {
+    "ok": false,
+    "error": "E_BAD_VALUE"
+  },
+  {
+    "ok": false,
+    "error": "E_MISSING_ARG"
+  },
+  {
+    "ok": false,
+    "error": "E_SYNTAX|E_BAD_VALUE"
+  },
+  {
+    "ok": false,
+    "error": "E_UNKNOWN_ARG"
+  },
+  {
+    "ok": false,
+    "error": "E_MISSING_ARG"
+  },
+  {
+    "ok": false,
+    "error": "E_MISSING_ARG"
+  },
+  {
+    "ok": false,
+    "error": "E_SYNTAX|E_BAD_VALUE"
+  },
+  {
+    "ok": false,
+    "error": "E_UNKNOWN_CMD"
+  },
+  {
+    "ok": true
+  },
+  {
+    "ok": false,
+    "error": "E_SYNTAX"
+  },
+  {
+    "ok": false,
+    "error": "E_SYNTAX"
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE"
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE"
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE"
+  },
+  {
+    "ok": false,
+    "error": "E_BAD_VALUE"
+  },
+  {
+    "ok": false,
+    "error": "E_MISSING_ARG"
+  },
+  {
+    "ok": false,
+    "error": "E_RANGE|E_BAD_VALUE"
+  },
+  {
+    "ok": false,
+    "error": "E_BAD_VALUE"
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ]
+    }
+  }
+]

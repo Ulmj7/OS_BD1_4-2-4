@@ -1,0 +1,11 @@
+/build/
+__pycache__/
+*.pyc
+src/kernel/*.o
+src/kernel/*.ko
+src/kernel/*.mod
+src/kernel/*.mod.c
+src/kernel/.*.cmd
+src/kernel/Module.symvers
+src/kernel/modules.order
+.briefs/

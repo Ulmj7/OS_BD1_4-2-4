@@ -1,0 +1,14 @@
+collatz run start=1
+collatz run start=15
+collatz run start=25
+collatz run start=97
+collatz run start=2147483647
+collatz run start=27
+collatz traverse
+collatz search value=9232
+collatz search value=99999
+collatz delete value=9232
+collatz run start=837799
+collatz search value=2974984576
+collatz delete value=2974984576
+collatz clear

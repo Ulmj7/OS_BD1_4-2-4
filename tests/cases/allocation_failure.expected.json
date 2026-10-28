@@ -1,0 +1,48 @@
+[
+  {
+    "ok": true
+  },
+  {
+    "ok": true
+  },
+  {
+    "ok": false,
+    "error": "E_NOMEM"
+  },
+  {
+    "ok": true
+  },
+  {
+    "ok": true
+  },
+  {
+    "ok": true
+  },
+  {
+    "ok": false,
+    "error": "E_NOMEM"
+  },
+  {
+    "ok": true
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ],
+      "collatz": [
+        {
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "ok": true
+  }
+]

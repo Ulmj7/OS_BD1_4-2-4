@@ -1,0 +1,10 @@
+color add_tail red=1 green=2 blue=3
+inject_fail after=0
+color add_head red=4 green=5 blue=6
+inject_fail off
+collatz run start=1
+inject_fail after=3
+collatz run start=25
+inject_fail off
+state
+reset

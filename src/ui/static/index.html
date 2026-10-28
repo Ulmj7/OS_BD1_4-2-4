@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Цөмийн өгөгдлийн бүтэц · IV-2-4</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="identity"><svg viewBox="0 0 36 36" aria-hidden="true"><rect x="3" y="9" width="12" height="18" rx="3"/><rect x="21" y="9" width="12" height="18" rx="3"/><path d="M15 14h6m-6 8h6M9 9V4h18v5M9 27v5h18v-5"/></svg><div><h1>Цөмийн өгөгдлийн бүтэц</h1><p>F.CSM302 · Бие даалт 1 · IV-2-4 баг</p></div></div>
+    <div class="header-actions"><span id="connection" class="connection" role="status">Холбогдож байна…</span><button id="theme" type="button" aria-label="Өнгөний горим солих">Бараан горим</button></div>
+  </header>
+  <main>
+    <div class="intro"><p><code>list_head</code> тойрог, хоёр холбоост жагсаалтыг үйлдэл бүрээр нь судлаарай.</p><span class="runtime">C хөдөлгүүр · бодит заагч</span></div>
+    <nav class="tabs" aria-label="Өгөгдлийн бүтэц" role="tablist">
+      <button role="tab" aria-selected="true" aria-controls="workspace" id="tab-color" data-tab="color">Өнгөний жагсаалт <span id="count-color">0</span></button>
+      <button role="tab" aria-selected="false" aria-controls="workspace" id="tab-collatz" data-tab="collatz" tabindex="-1">Collatz <span id="count-collatz">0</span></button>
+      <button role="tab" aria-selected="false" aria-controls="workspace" id="tab-stack" data-tab="stack" tabindex="-1">Стек <span id="count-stack">0</span></button>
+      <button role="tab" aria-selected="false" aria-controls="workspace" id="tab-queue" data-tab="queue" tabindex="-1">Дараалал <span id="count-queue">0</span></button>
+    </nav>
+    <div id="workspace" class="workspace" role="tabpanel" aria-labelledby="tab-color">
+      <aside class="controls">
+        <h2>Үйлдэл сонгох</h2>
+        <form id="operation-form">
+          <fieldset id="operation-fields"><legend class="sr-only">Жагсаалтын үйлдэл</legend>
+            <label for="operation">Үйлдэл</label><select id="operation"></select>
+            <div id="fields"></div>
+            <p id="form-hint" class="hint"></p>
+            <button class="primary wide" type="submit">Үйлдлийг гүйцэтгэх <span aria-hidden="true">↵</span></button>
+          </fieldset>
+        </form>
+        <div class="presets"><h3>Бэлэн жишээ</h3><button type="button" class="mutating" data-command="color example">Номын 4 өнгө</button><button type="button" class="mutating" data-command="collatz run start=27">Collatz · 27-оос эхлэх</button><p class="hint">Violet: RGB(138, 43, 226). Номын green/blue солигдсон утгыг зассан.</p></div>
+        <details class="command-box"><summary>Командыг шууд оруулах</summary><form id="command-form"><label for="command">Хөдөлгүүрийн команд</label><input id="command" name="command" value="check" maxlength="512" spellcheck="false" autocomplete="off"><button type="submit" class="mutating wide">Команд илгээх</button></form><p class="hint">Жишээ: <code>inject_fail after=0</code>. Дараа нь <code>inject_fail off</code>.</p></details>
+        <button id="reset" class="mutating subtle wide" type="button">Бүх бүтцийг хоослох</button>
+      </aside>
+      <section class="visual" aria-label="Бүтцийн график">
+        <div class="graph-heading"><div><h2 id="graph-title">Өнгөний жагсаалт</h2><p id="graph-summary">Төлөвийг уншиж байна…</p></div><span id="invariant" class="badge">Шалгаж байна…</span></div>
+        <div id="history-notice" class="notice" hidden>Түүхийн агшин — зөвхөн уншина. Үйлдэл хийхийн тулд сүүлийн алхамд очно уу.</div>
+        <div class="graph-toolbar"><div class="zoom-tools"><button id="zoom-out" aria-label="Графикийг жижигрүүлэх" type="button">−</button><output id="zoom-level">100%</output><button id="zoom-in" aria-label="Графикийг томруулах" type="button">+</button><button id="fit" type="button">Өргөнд тааруулах</button></div><span class="hint">Чирж зөөнө · сумтай товчоор шилжинэ</span></div>
+        <div id="graph-frame" class="graph-frame" tabindex="0" role="region" aria-label="График. Сумтай товчоор зөөж, нэмэх хасах товчоор хэмжээг солино."><svg id="graph" role="img" aria-labelledby="svg-title svg-desc"><title id="svg-title">list_head бүтцийн график</title><desc id="svg-desc">Тойрог жагсаалтын next болон prev холбоос. Бүх заагчийг C хөдөлгүүрээс уншина.</desc></svg></div>
+        <div class="legend" aria-label="Графикийн тайлбар"><span><i class="line next"></i>next</span><span><i class="line prev"></i>prev</span><span><i class="key added"></i>Шинэ</span><span><i class="key match"></i>Олдсон</span><span># = kmalloc дугаар · хаяг = hex</span></div>
+        <p id="freed" class="freed" hidden></p>
+        <div class="timeline"><div class="timeline-title"><h3>Үйлдлийн түүх</h3><output id="history-label">0 / 0</output></div><div class="timeline-controls"><button id="back" aria-label="Өмнөх алхам" type="button">←</button><input id="history" type="range" min="0" max="0" value="0" aria-label="Түүхийн алхам"><button id="forward" aria-label="Дараагийн алхам" type="button">→</button><button id="latest" type="button">Сүүлийн алхам</button></div><p id="history-command" class="mono">state</p></div>
+      </section>
+    </div>
+    <div id="message" class="message" role="status" aria-live="polite">Хөдөлгүүртэй холбогдож байна…</div>
+    <section class="telemetry" aria-label="Санах ой ба гүйцэтгэл">
+      <div class="memory"><h2>Санах ойн бүртгэл</h2><dl><div><dt>kmalloc</dt><dd id="allocs">0</dd></div><div><dt>kfree</dt><dd id="frees">0</dd></div><div><dt>Амьд зангилаа</dt><dd id="live">0</dd></div><div><dt>Ашигласан байт</dt><dd id="bytes">0</dd></div></dl><p id="limit" class="hint"></p></div>
+      <div class="trace"><h2>Kernel API дуудлагууд <span id="ops-count">0</span></h2><pre id="ops" tabindex="0" aria-label="Kernel API дуудлагууд">Үйлдэл хийсний дараа энд харагдана.</pre></div>
+      <div class="trace"><h2>dmesg <span>printk</span></h2><pre id="logs" tabindex="0" aria-label="dmesg бүртгэл">Жагсаалтыг гүйлгэж printk бүртгэлийг харна уу.</pre></div>
+    </section>
+    <details class="node-details"><summary>Зангилаануудын утга ба заагчийг хүснэгтээр харах</summary><div class="table-scroll"><table><caption id="table-caption">Бүтцийн одоогийн төлөв</caption><thead><tr><th>Индекс</th><th>kmalloc #</th><th>Утга</th><th>Хаяг</th><th>next</th><th>prev</th></tr></thead><tbody id="node-table"></tbody></table></div></details>
+  </main>
+  <footer><span>Operating System Concepts · 10-р хэвлэл · 3-р бүлэг · Project 4</span><span>Бодит C гүйцэтгэл, user-space shim орчин</span></footer>
+</body>
+</html>

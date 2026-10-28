@@ -1,0 +1,169 @@
+[
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 4,
+          "green": 5,
+          "blue": 6
+        },
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 4,
+          "green": 5,
+          "blue": 6
+        },
+        {
+          "red": 1,
+          "green": 8,
+          "blue": 9
+        },
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 4,
+          "green": 5,
+          "blue": 6
+        },
+        {
+          "red": 1,
+          "green": 8,
+          "blue": 9
+        },
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ]
+    },
+    "effect_indexes": {
+      "matched": {
+        "structure": "color",
+        "indexes": [
+          1,
+          2
+        ]
+      }
+    }
+  },
+  {
+    "ok": false,
+    "error": "E_NOT_FOUND"
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 1,
+          "green": 8,
+          "blue": 9
+        },
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ]
+    },
+    "effect_indexes": {
+      "removed": {
+        "structure": "color",
+        "indexes": [
+          0
+        ]
+      }
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": []
+    },
+    "effect_counts": {
+      "removed": 2
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        }
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 1,
+          "green": 2,
+          "blue": 3
+        },
+        {
+          "red": 1,
+          "green": 8,
+          "blue": 9
+        }
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": [
+        {
+          "red": 1,
+          "green": 8,
+          "blue": 9
+        }
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": []
+    }
+  }
+]

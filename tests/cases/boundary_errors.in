@@ -1,0 +1,31 @@
+state
+color delete index=0
+stack pop
+stack peek
+queue dequeue
+queue peek
+color insert index=0 red=1 green=2 blue=3
+color add_tail red=1 green=2 blue=3
+color insert index=9 red=1 green=2 blue=3
+color insert index=-1 red=1 green=2 blue=3
+color add_tail red=256 green=2 blue=3
+color add_tail red=-1 green=2 blue=3
+color add_tail red=abc green=2 blue=3
+color add_tail red=1 green=2
+color add_tail red=1 green=2 blue=3 red=4
+color add_tail red=1 green=2 blue=3 alpha=4
+color delete
+color search
+color delete index=0 red=1
+unknown command
+state                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+state                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+collatz run start=0
+collatz run start=-1
+collatz run start=2147483648
+collatz run start=abc
+collatz run
+stack push value=9223372036854775808
+queue enqueue value=nan
+state

@@ -1,0 +1,65 @@
+[
+  {
+    "ok": true,
+    "counts": {
+      "color": 0,
+      "collatz": 0,
+      "stack": 0,
+      "queue": 0
+    }
+  },
+  {
+    "ok": true,
+    "counts": {
+      "color": 4
+    },
+    "contains": {
+      "color": {
+        "red": 138,
+        "green": 43,
+        "blue": 226
+      }
+    },
+    "effect_counts": {
+      "added": 4
+    }
+  },
+  {
+    "ok": true,
+    "effect_indexes": {
+      "visited": {
+        "structure": "color",
+        "indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    }
+  },
+  {
+    "ok": true
+  },
+  {
+    "ok": true,
+    "structures": {
+      "color": []
+    },
+    "effect_counts": {
+      "removed": 4
+    }
+  },
+  {
+    "ok": true,
+    "counts": {
+      "color": 0,
+      "collatz": 0,
+      "stack": 0,
+      "queue": 0
+    }
+  },
+  {
+    "ok": true
+  }
+]

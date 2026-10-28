@@ -1,0 +1,11 @@
+stack push value=10
+stack push value=-2
+stack push value=9223372036854775807
+stack peek
+stack pop
+queue enqueue value=10
+queue enqueue value=-2
+queue enqueue value=-9223372036854775808
+queue peek
+queue dequeue
+reset

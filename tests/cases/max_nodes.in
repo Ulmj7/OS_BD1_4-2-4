@@ -1,0 +1,11 @@
+#!args --max-nodes 3
+state
+stack push value=1
+stack push value=2
+stack push value=3
+stack push value=4
+color example
+collatz run start=15
+collatz run start=1
+collatz run start=25
+state

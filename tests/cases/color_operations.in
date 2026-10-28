@@ -1,0 +1,11 @@
+color add_tail red=1 green=2 blue=3
+color add_head red=4 green=5 blue=6
+color insert index=0 red=1 green=8 blue=9
+color search red=1
+color search red=255
+color delete index=0
+color delete red=1
+color add_tail red=1 green=2 blue=3
+color add_tail red=1 green=8 blue=9
+color delete red=1 green=2
+color clear
