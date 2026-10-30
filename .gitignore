@@ -8,5 +8,4 @@ src/kernel/*.mod.c
 src/kernel/.*.cmd
 src/kernel/Module.symvers
 src/kernel/modules.order
-/video/*
-!/video/IV-2-4_BD1_Demo.mp4
+.briefs/

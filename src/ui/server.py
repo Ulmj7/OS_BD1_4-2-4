@@ -245,10 +245,7 @@ def main():
     def stop(_signal, _frame):
         raise KeyboardInterrupt
 
-    # Python installs its own SIGINT handler only when SIGINT was not inherited as ignored (background/nohup/CI
-    # launches); installing it explicitly keeps Ctrl+C and group SIGINT on the same graceful path as SIGTERM.
-    for number in (signal.SIGINT, signal.SIGTERM):
-        signal.signal(number, stop)
+    signal.signal(signal.SIGTERM, stop)
     print(f"http://127.0.0.1:{server.server_port}", flush=True)
     try:
         server.serve_forever()

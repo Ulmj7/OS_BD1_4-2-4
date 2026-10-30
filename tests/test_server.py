@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """HTTP boundary tests against the real stdlib server and persistent engine."""
 import concurrent.futures
-from functools import partial
 import http.client
 import json
 import os
@@ -34,7 +33,6 @@ class ServerTests(unittest.TestCase):
             ["python3", "-u", str(ROOT / "src/ui/server.py"), "--port", str(cls.port),
              "--engine", str(ROOT / "build/kds_engine")],
             cwd=ROOT, stdout=cls.log, stderr=cls.log,
-            preexec_fn=partial(signal.signal, signal.SIGINT, signal.SIG_DFL),
         )
         try:
             deadline = time.monotonic() + 8
@@ -222,18 +220,10 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(sorted(actual), list(range(24)))
 
     def test_group_sigint_shutdown_frees_live_nodes(self):
-        self.assert_group_sigint_shutdown(signal.SIG_DFL)
-
-    def test_group_sigint_shutdown_when_inherited_ignored(self):
-        self.assert_group_sigint_shutdown(signal.SIG_IGN)
-
-    def assert_group_sigint_shutdown(self, initial_sigint):
-        # Control inheritance before Python starts; the server installs its own handler.
+        # Observe the real child's exit status without changing signal handling.
         launcher = """
 import runpy
-import signal
 import sys
-print('QA_SIGINT_IGNORED=' + str(signal.getsignal(signal.SIGINT) == signal.SIG_IGN), flush=True)
 server = runpy.run_path(sys.argv[1])
 stop = server['Engine']._stop
 def observed_stop(engine):
@@ -268,7 +258,6 @@ server['main']()
                      str(ROOT / "src/ui/server.py"), "--port", str(port),
                      "--engine", str(ROOT / "build/kds_engine")],
                     cwd=ROOT, stdout=log, stderr=log, start_new_session=True,
-                    preexec_fn=partial(signal.signal, signal.SIGINT, initial_sigint),
                 )
                 engine_pids = []
                 try:
@@ -292,7 +281,6 @@ server['main']()
                     os.killpg(process.pid, signal.SIGINT)
                     process.wait(timeout=8)
                     output = log_path.read_text(errors="replace")
-                    self.assertIn("QA_SIGINT_IGNORED=" + str(initial_sigint == signal.SIG_IGN), output)
                     self.assertEqual(process.returncode, 0, output)
                     self.assertNotIn("LEAK", output)
                     self.assertNotIn("Traceback", output)

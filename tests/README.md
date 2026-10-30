@@ -52,8 +52,7 @@ that a `.ko` builds or loads on a real kernel.
 | H09 | 24 concurrent enqueues with eight client threads | All replies valid; exactly values 0..23 present once | Lock must pair each request with its own engine response |
 | H10 | Scan actual HTML/JS/CSS references | No remote CDN, font, script, stylesheet or fetch dependency | Offline UI contract; SVG namespace URI is not a dependency |
 | H11 | SIGTERM server after tests | Terminates within 5s; engine PID gone; no LEAK or traceback | Clean shutdown requirement |
-| H12 | Server starts with default SIGINT and four live colors; SIGINT to its foreground process group | Real engine exit 0, server exit 0, no LEAK/traceback, engine PID gone | Explicit child disposition isolates server behavior from an ignored SIGINT in the test launcher; exit observation calls the original shutdown method unchanged |
-| H13 | Server starts with inherited ignored SIGINT and four live colors; group SIGINT | Same graceful server/engine exit 0 and no leaks | The server must install its own SIGINT handler even for background/nohup/CI launches; the launcher verifies SIGINT was initially ignored |
+| H12 | Server with four live colors; SIGINT to its foreground process group | Real engine exit 0, server exit 0, no LEAK/traceback, engine PID gone | Terminal Ctrl+C must let the parent close stdin and the engine free its lists; exit observation calls the original shutdown method unchanged |
 
 ## Collatz reference table
 
@@ -89,14 +88,14 @@ with `|`. Core tests use the exact documented classification. Search misses
 are `E_NOT_FOUND`; an empty CLI line is skipped, while an empty core command
 is `E_SYNTAX` and an empty HTTP command is HTTP 400.
 
-The initial automated scope is userspace API/protocol/HTTP testing. Browser interaction,
+The initial scope is userspace API/protocol/HTTP QA. Browser interaction,
 visual graph accuracy, real kernel compilation/loading, and the manual-only
 fresh-copy workflow require separate verification. Path traversal probes do
-not create a symlink inside `src/ui/static`, because the test only needs a temporary static root.
+not create a symlink inside `src/ui/static`, because QA owns `tests/**` only.
 
 ## Optional Brave/Chromium UI checks
 
-The CDP checks are preserved in `tests/ui/browser_check.py` and
+The developer's CDP checks are preserved in `tests/ui/browser_check.py` and
 `tests/ui/interactions.py`, with portable browser discovery, an isolated
 temporary browser profile, and an ephemeral debug port. They use Python's
 standard library and require an already installed Brave/Chromium; no downloads
