@@ -1,99 +1,101 @@
-<!doctype html><html lang="mn"><head><meta charset="utf-8"><title>IV-2-4 · БД1 · Manual</title><style>@page { size: A4; }
+<!doctype html>
+<html lang="mn"><head><meta charset="utf-8"><title>IV-2-4 · БД1 · Гарын авлага</title>
+<style>
+@page {
+  size: A4; margin: 24mm 23mm 24mm 23mm;
+  @bottom-left { content: "IV-2-4 · Kernel Data Structures · F.CSM302 Бие даалт 1 · Гарын авлага"; font-family: "FreeSans", sans-serif; font-size: 8pt; color: #7a7f87; }
+  @bottom-right { content: counter(page); font-family: "FreeSans", sans-serif; font-size: 8pt; color: #7a7f87; }
+}
+@page :first { @bottom-left { content: none; } @bottom-right { content: none; } }
 * { box-sizing: border-box; }
-html { font-family: "Adwaita Sans", "FreeSans", "DejaVu Sans", sans-serif; font-size: 10pt; color: #1b2a2e; line-height: 1.5; }
+html { font-family: "FreeSerif", "Noto Serif", serif; font-size: 11pt; line-height: 1.38; color: #111; }
 body { margin: 0; }
-code, pre, kbd, samp { font-family: "JetBrainsMono Nerd Font Mono", "Adwaita Mono", "FreeMono", monospace; font-size: 8.4pt; }
-code { background: #eef3f2; padding: 0.5pt 3pt; border-radius: 3pt; color: #0b4f47; }
-pre { background: #f3f6f6; border: 0.6pt solid #d6e0de; border-left: 3pt solid #0f6b60; border-radius: 3pt; padding: 6pt 8pt; margin: 6pt 0 8pt; white-space: pre-wrap; word-break: break-word; line-height: 1.38; break-inside: avoid; }
-pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
-h1 { font-size: 16pt; line-height: 1.2; color: #0b4f47; margin: 20pt 0 8pt; padding-bottom: 4pt; border-bottom: 1.4pt solid #0f6b60; break-after: avoid; }
-h2 { font-size: 12pt; color: #0f6b60; margin: 14pt 0 4pt; break-after: avoid; }
-h3 { font-size: 10.4pt; color: #1b2a2e; margin: 10pt 0 3pt; break-after: avoid; }
 p { margin: 0 0 6pt; text-align: left; }
-ul, ol { margin: 0 0 7pt; padding-left: 16pt; }
-li { margin-bottom: 2pt; }
-a { color: #0b6a8a; }
-table { border-collapse: collapse; width: 100%; margin: 4pt 0 9pt; font-size: 8.8pt; }
-caption { caption-side: top; text-align: left; font-weight: 700; color: #0b4f47; padding: 0 0 3pt; font-size: 9pt; }
-th, td { border: 0.6pt solid #c9d6d3; padding: 3pt 5pt; vertical-align: top; text-align: left; }
-th { background: #e3efec; color: #0b4f47; font-weight: 700; }
-tr { break-inside: avoid; }
-tbody tr:nth-child(even) td { background: #f6faf9; }
-td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-.ok { color: #0a6b3c; font-weight: 700; }
-.bad { color: #a12b2b; font-weight: 700; }
-figure { margin: 8pt 0 10pt; break-inside: avoid; text-align: center; }
-figure img { max-width: 100%; border: 0.6pt solid #c9d6d3; border-radius: 3pt; }
-figure svg { max-width: 100%; height: auto; }
-figcaption { font-size: 8.6pt; color: #4a5d60; margin-top: 3pt; text-align: left; }
-.note { border: 0.6pt solid #b8d6cf; background: #eef7f5; border-left: 3pt solid #0f6b60; border-radius: 3pt; padding: 5pt 8pt; margin: 6pt 0 8pt; break-inside: avoid; }
-.warn { border: 0.6pt solid #e5c6a1; background: #fdf4e8; border-left: 3pt solid #b8661a; border-radius: 3pt; padding: 5pt 8pt; margin: 6pt 0 8pt; break-inside: avoid; }
-.cover { min-height: 255mm; display: flex; flex-direction: column; justify-content: space-between; break-after: page; }
-.cover .course { font-size: 10.5pt; letter-spacing: 0.6pt; color: #0f6b60; font-weight: 700; text-transform: uppercase; }
-.cover h1.title { font-size: 28pt; line-height: 1.12; border: 0; margin: 14pt 0 6pt; color: #0b4f47; padding: 0; }
-.cover .subtitle { font-size: 13pt; color: #3b4f52; margin-bottom: 14pt; }
-.cover .bar { height: 5pt; width: 70pt; background: #0f6b60; margin: 10pt 0 14pt; border-radius: 3pt; }
-.cover table { width: auto; min-width: 60%; font-size: 9.6pt; }
-.cover td.k { background: #e3efec; font-weight: 700; color: #0b4f47; white-space: nowrap; }
-.toc { columns: 2; column-gap: 24pt; font-size: 9.4pt; margin-bottom: 6pt; }
-.toc div { break-inside: avoid; margin-bottom: 2pt; }
-.pb { break-before: page; }
-.two { display: flex; gap: 12pt; align-items: flex-start; }
-.two > * { flex: 1; min-width: 0; }
-.small { font-size: 8.6pt; color: #4a5d60; }
-.kpis { display: flex; flex-wrap: wrap; gap: 6pt; margin: 6pt 0 8pt; }
-.kpi { flex: 1 1 28%; border: 0.6pt solid #c9d6d3; border-radius: 4pt; padding: 5pt 8pt; background: #f6faf9; break-inside: avoid; }
-.kpi b { display: block; font-size: 15pt; color: #0b4f47; line-height: 1.15; }
-.kpi span { font-size: 8.4pt; color: #4a5d60; }
-.ph { background: #fff3c4; padding: 0 3pt; border-radius: 2pt; }
-.footer-note { margin-top: 10pt; font-size: 8.4pt; color: #5a6c6f; }
-
+b, strong { font-weight: 700; }
+h1, h2, h3 { font-family: "FreeSans", "Noto Sans", sans-serif; color: #1f4e9c; font-weight: 400; break-after: avoid; }
+h1 { font-size: 16.5pt; margin: 16pt 0 6pt; line-height: 1.2; }
+h2 { font-size: 12pt; margin: 11pt 0 4pt; }
+h3 { font-size: 10.6pt; margin: 8pt 0 3pt; }
+code, pre, kbd, samp { font-family: "FreeMono", "Noto Sans Mono", monospace; font-size: 9.6pt; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+kbd { border: 0.5pt solid #b9bec7; border-radius: 2pt; padding: 0 2pt; }
+pre { margin: 4pt 0 8pt 12pt; line-height: 1.25; break-inside: avoid; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 8.8pt; }
 pre.long { break-inside: auto; }
+ul, ol { margin: 0 0 6pt; padding-left: 18pt; }
+li { margin: 0 0 2.5pt; text-align: left; }
+ol li { text-align: left; }
+table { border-collapse: collapse; width: 100%; margin: 6pt 0 9pt; font-size: 9.6pt; line-height: 1.28; }
 table.keep { break-inside: avoid; }
-figure.shot img { width: 76%; }
-figure.wide img { width: 94%; }
-.side { display: flex; gap: 14pt; align-items: flex-start; }
-.side figure { flex: 0 0 25%; margin: 0; }
-.side figure img { width: 100%; }
-.side > div { flex: 1; min-width: 0; }
-code, pre, kbd, samp { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0, "clig" 0; }
-pre { font-size: 7.8pt; }
-</style></head><body><section class="cover" style="min-height:0; break-after:auto">
-  <div class="course">F.CSM302 Үйлдлийн систем · Бие даалт 1</div>
-  <div class="bar"></div>
-  <h1 class="title" style="font-size:24pt">Manual — Kernel Data Structures</h1>
-  <div class="subtitle" style="margin-bottom:8pt">8.1 Хэрэглэгчийн заавар · 8.2 Operational заавар</div>
-  <table>
-    <tr><td class="k">Хуваарилалтын код</td><td><b>IV-2-4</b></td></tr>
-    <tr><td class="k">Төсөл</td><td>Kernel Data Structures (OS Concepts 10e, Ch. 3, Project 4)</td></tr>
-    <tr><td class="k">UI дүрслэл</td><td>Kernel structure graph</td></tr>
-    <tr><td class="k">Repository</td><td><span class="ph">[GitHub холбоос]</span> · хавтас <code>kernel-data-structures</code></td></tr>
-    <tr><td class="k">Тайлан</td><td><code>docs/IV-2-4_BD1_Report.pdf</code></td></tr>
-  </table>
-  <div class="note"><b>Хурдан эхлэх (3 команд):</b> <code>make</code> → <code>make test</code> → <code>make run</code>, дараа нь browser-ээр <code>http://127.0.0.1:8080</code> нээнэ.</div>
+tr { break-inside: avoid; }
+caption { caption-side: top; text-align: left; font-family: "FreeSans", sans-serif; font-size: 9pt; color: #1f4e9c; padding: 0 0 3pt; }
+th { background: #1d3557; color: #fff; font-family: "FreeSans", sans-serif; font-weight: 700; font-size: 9pt; text-align: left; padding: 3pt 5pt; }
+td { padding: 3pt 5pt; border-bottom: 0.5pt solid #b9bec7; vertical-align: top; text-align: left; }
+figure { margin: 8pt 0 10pt; break-inside: avoid; text-align: center; }
+figure img { width: 58%; border: 0.5pt solid #b9bec7; }
+figcaption { font-size: 9.6pt; font-style: italic; margin-top: 3pt; text-align: center; }
+.ph { background: #fff3c4; }
+.small { font-size: 9.6pt; }
+.nw { white-space: nowrap; }
+.pb { break-before: page; }
+.keep { break-after: avoid; }
+.cover { height: 247mm; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; break-after: page; }
+.cover .uni { font-size: 12.5pt; letter-spacing: 0.4pt; line-height: 1.55; margin-top: 4mm; }
+.cover .course { font-size: 12pt; }
+.cover h1.title { font-family: "FreeSerif", serif; color: #111; font-size: 21pt; font-weight: 700; margin: 0 0 6pt; line-height: 1.25; }
+.cover .sub { font-size: 11.5pt; }
+.cover .people { width: 100%; text-align: left; font-size: 11pt; }
+.cover .people table { margin: 0; font-size: 11pt; width: auto; }
+.cover .people td { border: 0; padding: 1pt 14pt 1pt 0; }
+.cover .people td.k { font-style: italic; white-space: nowrap; }
+.cover .city { font-size: 11.5pt; line-height: 1.5; }
+</style></head><body>
+
+<section class="cover">
+  <div class="uni">Шинжлэх Ухаан Технологийн Их Сургууль<br>Мэдээлэл, Холбооны Технологийн Сургууль</div>
+  <div>
+    <div class="course">F.CSM302 Үйлдлийн систем</div>
+    <div style="height:46mm"></div>
+    <h1 class="title">Бие даалт №1. Кернелийн өгөгдлийн бүтэц — Гарын авлага</h1>
+    <div class="sub">Kernel Data Structures<br>8.1 Хэрэглэгчийн заавар · 8.2 Operational заавар</div>
+  </div>
+  <div class="people">
+    <table>
+      <tr><td class="k">Гүйцэтгэсэн оюутнууд:</td><td>Б. Лхамрагчаа (B241940102)</td></tr>
+      <tr><td></td><td>Г. Үлэмж (B232270805)</td></tr>
+      <tr><td></td><td>Т. Буянтөгс (B231910034)</td></tr>
+      <tr><td></td><td>Э. Төгсбаяр (221910021)</td></tr>
+      <tr><td></td><td>Ө. Чинзориг (200900028)</td></tr>
+      <tr><td></td><td>Б. Идэрбат (B242270075)</td></tr>
+      <tr><td class="k">Хуваарилалтын код:</td><td>IV-2-4</td></tr>
+      <tr><td class="k">GitHub:</td><td>https://github.com/Ulmj7/OS_BD1_4-2-4 · хавтас <code>kernel-data-structures</code></td></tr>
+      <tr><td class="k">Тайлан:</td><td><code>docs/IV-2-4_BD1_Report_final.pdf</code></td></tr>
+    </table>
+  </div>
+  <div class="city">Улаанбаатар хот<br>2026 он</div>
 </section>
 
-<h1>8.1 Хэрэглэгчийн заавар</h1>
+<h1 style="margin-top:0">8.1 Хэрэглэгчийн заавар</h1>
+<p><b>Хурдан эхлэх.</b> <code>make</code>, дараа нь <code>make test</code>, дараа нь <code>make run</code>. Эцэст нь browser-ээр <code>http://127.0.0.1:8080</code> хаягийг нээнэ.</p>
 <h2>8.1.1 Програмын зорилго</h2>
-<p>Linux kernel-ийн дугуй хоёр холбоост жагсаалт <code>struct list_head</code>-ийг турших, үйлдэл бүрийн дараа <code>next</code>/<code>prev</code> заагч, <code>kmalloc</code>/<code>kfree</code> хэрхэн өөрчлөгдөхийг граф дээр харах. Дөрвөн бүтэц: <b>Өнгөний жагсаалт</b> (номын Part I), <b>Collatz</b> (Part II), <b>Стек</b>, <b>Дараалал</b>. Граф нь хуурамч загвар биш, C хөдөлгүүрийн <b>бодит заагчаас</b> зурагдана.</p>
+<p>Энэ програм Linux кернелийн дугуй хоёр холбоост жагсаалт <code>struct list_head</code>-ийг турших зориулалттай. Үйлдэл бүрийн дараа <code>next</code>/<code>prev</code> заагч, <code>kmalloc</code>/<code>kfree</code> хэрхэн өөрчлөгдөхийг граф дээр харуулна.</p>
+<p>Дөрвөн бүтэц бий: <b>Өнгөний жагсаалт</b> (номын Part I), <b>Collatz</b> (Part II), <b>Стек</b>, <b>Дараалал</b>. Граф нь хуурамч загвар биш, C хөдөлгүүрийн <b>бодит заагчаас</b> зурагдана.</p>
 <h2>8.1.2 Дэмжих орчин</h2>
 <ul>
-  <li><b>OS:</b> Linux (Arch Linux, Linux 7.2.11 дээр туршсан). Тестийн нэг хэсэг Linux-ийн <code>/proc</code> ашигладаг тул macOS/Windows-д туршаагүй.</li>
+  <li><b>OS:</b> Linux (Arch Linux, Linux 7.2.11 дээр туршсан). Тестийн нэг хэсэг Linux-ийн <code>/proc</code>-ийг ашигладаг тул macOS/Windows-д туршаагүй.</li>
   <li><b>Хэрэгсэл:</b> <code>gcc</code> (16.2.1-ээр туршсан), <code>make</code> (GNU Make 4.4.1), <code>python3</code> (3.14.8; зөвхөн стандарт сан).</li>
   <li><b>Browser:</b> JavaScript ба SVG дэмждэг орчин үеийн browser (Brave 156/Chromium дээр туршсан). Интернет холболт шаардахгүй.</li>
 </ul>
 <h2>8.1.3 Суулгах, нээх алхам</h2>
 <ol>
-  <li>Repository-г татах: <code>git clone &lt;GitHub холбоос&gt; kernel-data-structures &amp;&amp; cd kernel-data-structures</code> (холбоос байхгүй бол хүргэсэн хавтсыг хуулж <code>cd</code> хийнэ — 8.2.1)</li>
-  <li>Бүтээх: <code>make</code> — <code>build/kds_engine</code> үүснэ.</li>
-  <li>(Заавал биш) Шалгах: <code>make test</code> — эцэст нь <code>All available tests passed.</code> гарна.</li>
-  <li>Асаах: <code>make run</code> — терминалд <code>http://127.0.0.1:8080</code> гарна.</li>
+  <li>Repository-г татах: <code>git clone https://github.com/Ulmj7/OS_BD1_4-2-4.git kernel-data-structures &amp;&amp; cd kernel-data-structures</code>. Холбоос байхгүй бол хүргэсэн хавтсыг хуулж <code>cd</code> хийнэ (8.2.1).</li>
+  <li>Бүтээх: <code>make</code>. <code>build/kds_engine</code> үүснэ.</li>
+  <li>Шалгах (заавал биш): <code>make test</code>. Эцэст нь <code>All available tests passed.</code> гарна.</li>
+  <li>Асаах: <code>make run</code>. Терминалд <code>http://127.0.0.1:8080</code> гарна.</li>
   <li>Browser-ээр энэ хаягийг нээнэ. Дээд талд «Хөдөлгүүр холбогдсон» гэж харагдвал бэлэн.</li>
 </ol>
 <h2>8.1.4 Оролт ба тохиргоо</h2>
-<table class="keep">
+<table>
   <caption>Хүснэгт 1. UI-ийн үйлдлүүд ба оролтын хязгаар</caption>
-  <thead><tr><th>Таб</th><th>Үйлдэл (UI дээрх нэр)</th><th>Оролт</th></tr></thead>
+  <thead><tr><th style="width:17%">Таб</th><th style="width:43%">Үйлдэл (UI дээрх нэр)</th><th>Оролт</th></tr></thead>
   <tbody>
     <tr><td rowspan="5">Өнгөний жагсаалт</td><td>Төгсгөлд нэмэх / Эхэнд нэмэх (<code>add_tail</code>/<code>add_head</code>)</td><td><code>red</code>, <code>green</code>, <code>blue</code>: 0…255</td></tr>
     <tr><td>Индексийн дараа оруулах (<code>insert</code>)</td><td><code>index</code> (0-ээс; тэр индекстэй зангилааны <b>дараа</b>) + өнгө</td></tr>
@@ -106,149 +108,156 @@ pre { font-size: 7.8pt; }
     <tr><td>Дараалал</td><td>enqueue (төгсгөлд), dequeue, peek</td><td><code>value</code>: тэмдэгтэй 64 бит</td></tr>
   </tbody>
 </table>
-<p><b>Бэлэн жишээ:</b> «Номын 4 өнгө» (<code>color example</code>), «Collatz · 27-оос эхлэх». <b>Командыг шууд оруулах</b> (хураангуй хэсэг) — дурын хөдөлгүүрийн команд (жишээ нь <code>inject_fail after=2</code>, <code>check</code>), ≤ 512 тэмдэгт, нэг мөр.</p>
-<p><b>Серверийн тохиргоо</b> (<code>python3 src/ui/server.py</code>): <code>--port</code> (default 8080), <code>--max-nodes</code> (1…100000, default 2048; бүтэц бүрийн зангилааны дээд хязгаар), <code>--engine</code> (default <code>build/kds_engine</code>). Жишээ: <code>python3 src/ui/server.py --port 9000 --max-nodes 50</code>. <b>URL параметр:</b> <code>?run=cmd1;cmd2</code> (командуудыг дарааллаар автоматаар ажиллуулна), <code>?tab=color|collatz|stack|queue</code>, <code>?theme=dark</code>.</p>
+<p><b>Бэлэн жишээ:</b> «Номын 4 өнгө» (<code>color example</code>) ба «Collatz · 27-оос эхлэх».</p>
+<p><b>Командыг шууд оруулах</b> хэсэгт дурын хөдөлгүүрийн команд бичиж болно (жишээ нь <code>inject_fail after=2</code>, <code>check</code>). Нэг мөр, ≤ 512 тэмдэгт.</p>
+<p><b>Серверийн тохиргоо</b> (<code>python3 src/ui/server.py</code>): <code>--port</code> (default 8080), <code>--max-nodes</code> (1…100000, default 2048; бүтэц бүрийн зангилааны дээд хязгаар), <code>--engine</code> (default <code>build/kds_engine</code>). Жишээ: <code>python3 src/ui/server.py --port 9000 --max-nodes 50</code>.</p>
+<p><b>URL параметр:</b> <code>?run=cmd1;cmd2</code> (командуудыг дарааллаар автоматаар ажиллуулна), <code>?tab=color|collatz|stack|queue</code>, <code>?theme=dark</code>.</p>
 <h2>8.1.5 Ажиллуулах, зогсоох, reset хийх</h2>
 <ul>
-  <li><b>Ажиллуулах:</b> <code>make run</code>. Үйлдэл хийхэд «Үйлдлийг гүйцэтгэх» (эсвэл Enter).</li>
-  <li><b>Зогсоох:</b> <code>make run</code>-ийн терминал дээр <kbd>Ctrl</kbd>+<kbd>C</kbd>. Хөдөлгүүр дуусахдаа чөлөөлөөгүй санах ой үлдсэн бол <code>LEAK: live=N</code> гэж бичнэ (хэвийн үед гарахгүй).</li>
-  <li><b>Reset:</b> «Бүх бүтцийг хоослох» товч (<code>reset</code>) — 4 бүтцийг чөлөөлж, алдааны тарилгыг унтраана; <code>kmalloc</code>/<code>kfree</code> хуримтлагдсан тоолуур үргэлжилнэ. Хөдөлгүүрийг бүрэн дахин эхлүүлэх: сервер зогсоож дахин асаана, эсвэл <code>curl -X POST http://127.0.0.1:8080/api/restart</code>.</li>
-  <li><b>Түүх:</b> «Үйлдлийн түүх» дэх ← → товч, гулсуур, «Сүүлийн алхам». Өнгөрсөн алхам <b>зөвхөн уншигдана</b> (үйлдэл түгжигдэнэ). Түүх нь browser-ийн табд хадгалагдах бөгөөд хуудсыг дахин ачаалбал алга болно; бүтцүүд хөдөлгүүрт хэвээр үлдэнэ. <b>Анхаар:</b> <code>?run=…</code>-тай хуудсыг дахин ачаалбал командууд дахин ажиллана.</li>
+  <li><b>Ажиллуулах:</b> <code>make run</code>. Үйлдэл хийхдээ «Үйлдлийг гүйцэтгэх» товчийг (эсвэл Enter) дарна.</li>
+  <li><b>Зогсоох:</b> <code>make run</code>-ийн терминал дээр <kbd>Ctrl</kbd>+<kbd>C</kbd>. Хөдөлгүүр дуусахдаа чөлөөлөөгүй санах ой үлдсэн бол <code>LEAK: live=N</code> гэж бичнэ. Хэвийн үед энэ гарахгүй.</li>
+  <li><b>Reset:</b> «Бүх бүтцийг хоослох» товч (<code>reset</code>) 4 бүтцийг чөлөөлж, алдааны тарилгыг унтраана. <code>kmalloc</code>/<code>kfree</code>-ийн хуримтлагдсан тоолуур үргэлжилнэ.</li>
+  <li><b>Хөдөлгүүрийг бүрэн дахин эхлүүлэх:</b> сервер зогсоож дахин асаана, эсвэл <code>curl -X POST http://127.0.0.1:8080/api/restart</code>.</li>
+  <li><b>Түүх:</b> «Үйлдлийн түүх» дэх ← → товч, гулсуур, «Сүүлийн алхам». Өнгөрсөн алхам <b>зөвхөн уншигдана</b>, үйлдэл түгжигдэнэ. Түүх browser-ийн табд хадгалагдана; хуудсыг дахин ачаалбал алга болно. Бүтцүүд хөдөлгүүрт хэвээр үлдэнэ.</li>
+  <li><b>Анхаар:</b> <code>?run=…</code>-тай хуудсыг дахин ачаалбал командууд дахин ажиллана.</li>
 </ul>
 <h2>8.1.6 Дүрслэлийн тэмдэг, өнгө, төлөв</h2>
 <table>
   <caption>Хүснэгт 2. Графын тайлбар</caption>
-  <thead><tr><th>Тэмдэг</th><th>Утга</th></tr></thead>
+  <thead><tr><th style="width:34%">Тэмдэг</th><th>Утга</th></tr></thead>
   <tbody>
     <tr><td><b>list_head</b> (саарал, «Толгой»)</td><td>Жагсаалтын толгой (<code>&amp;color_list</code> гэх мэт). <code>next</code>/<code>prev</code> нь анхны ба сүүлийн зангилааг заана.</td></tr>
-    <tr><td>Зангилааны хайрцаг <code>#7 [0]</code></td><td><code>#</code> = <code>kmalloc</code>-ийн дугаар (serial); <code>[ ]</code> = жагсаалт дахь индекс (0-ээс); дор нь талбарууд ба хаяг (hex).</td></tr>
+    <tr><td>Зангилааны хайрцаг <code>#7 [0]</code></td><td><code>#</code> нь <code>kmalloc</code>-ийн дугаар (serial). <code>[ ]</code> нь жагсаалт дахь индекс (0-ээс). Дор нь талбарууд ба хаяг (hex).</td></tr>
     <tr><td>Өнгөний swatch</td><td><code>rgb(red, green, blue)</code>-ийн бодит өнгө.</td></tr>
-    <tr><td>Тасралтгүй сум (<b>next</b>)</td><td>Зангилааны <code>next</code> заагч. Сүүлийн зангилаанаас толгой руу <b>нум</b> = дугуй (circular) бүтэц.</td></tr>
+    <tr><td>Тасралтгүй сум (<b>next</b>)</td><td>Зангилааны <code>next</code> заагч. Сүүлийн зангилаанаас толгой руу <b>нум</b> байвал бүтэц дугуй (circular).</td></tr>
     <tr><td>Тасархай сум (<b>prev</b>)</td><td>Зангилааны <code>prev</code> заагч. Толгойноос сүүлийн зангилаа руу нум.</td></tr>
-    <tr><td>Улаан <code>?</code></td><td>Заагч бүртгэлд байхгүй зангилаа руу заасан (жагсаалт эвдэрсэн).</td></tr>
+    <tr><td>Улаан <code>?</code></td><td>Заагч бүртгэлд байхгүй зангилаа руу заасан. Жагсаалт эвдэрсэн.</td></tr>
     <tr><td>Толгойн өөртөө заасан сум</td><td>Жагсаалт хоосон (<code>head-&gt;next == head</code>).</td></tr>
     <tr><td><b>TOP · орой</b>, <b>FRONT · эхлэл</b>, <b>REAR · төгсгөл</b></td><td>Стек ба дарааллын байрлалын шошго.</td></tr>
     <tr><td>«Шинэ» (ногоон хүрээ)</td><td>Сая нэмэгдсэн зангилаа.</td></tr>
-    <tr><td>«Олдсон» (шар хүрээ)</td><td>Хайлтаар олдсон зангилаа; хайлтын явцад гүйлгэсэн зангилаанууд дарааллаар тодорно (анимаци).</td></tr>
+    <tr><td>«Олдсон» (шар хүрээ)</td><td>Хайлтаар олдсон зангилаа. Хайлтын явцад гүйлгэсэн зангилаанууд дарааллаар тодорно (анимаци).</td></tr>
     <tr><td>Тэмдэг «Холбоос бүрэн» / «Холбоос алдаатай»</td><td><code>kds_verify</code>-ийн үр дүн (<code>next→prev</code>, <code>prev→next</code>, хоёр чиглэлийн тоо).</td></tr>
     <tr><td>Санах ойн бүртгэл</td><td><code>kmalloc</code> (нийт дуудсан), <code>kfree</code>, <i>Амьд зангилаа</i> = <code>kmalloc − kfree</code>, <i>Ашигласан байт</i>.</td></tr>
-    <tr><td>Kernel API дуудлагууд / dmesg</td><td>Үйлдлийн бодит <code>kmalloc</code>/<code>list_*</code>/<code>kfree</code> дуудлага; <code>printk</code>-ийн мөр.</td></tr>
-    <tr><td>Дээд талын төлөв</td><td>«Хөдөлгүүр холбогдсон» / «Холболтын алдаа»; улаан мөр = алдаа (код + тайлбар).</td></tr>
-    <tr><td>Томруулах − 105 % +, «Өргөнд тааруулах»</td><td>Том жагсаалтад (Collatz 27 = 112 зангилаа) ойртуулах/холдуулах; графыг чирж зөөнө; сумтай товчоор шилжинэ.</td></tr>
+    <tr><td>Kernel API дуудлагууд / dmesg</td><td>Үйлдлийн бодит <code>kmalloc</code>/<code>list_*</code>/<code>kfree</code> дуудлага; <code>printk</code>-ийн мөр. (UI дээрх хэсгийн нэр.)</td></tr>
+    <tr><td>Дээд талын төлөв</td><td>«Хөдөлгүүр холбогдсон» / «Холболтын алдаа». Улаан мөр нь алдаа (код + тайлбар).</td></tr>
+    <tr><td>Томруулах − 105 % +, «Өргөнд тааруулах»</td><td>Том жагсаалтад (Collatz 27 = 112 зангилаа) ойртуулах/холдуулах. Графыг чирж зөөнө; сумтай товчоор шилжинэ.</td></tr>
     <tr><td>«Бараан/Цайвар горим»</td><td>Өнгөний горим солих.</td></tr>
   </tbody>
 </table>
 <h2>8.1.7 Жишээнүүд</h2>
 <h3>Жишээ 1 — Номын Part I: 4 өнгө, хайх, устгах</h3>
 <ol>
-  <li><i>Өнгөний жагсаалт</i> таб → «Номын 4 өнгө». Хүлээгдэх үр дүн: 4 зангилаа; dmesg-д
+  <li><i>Өнгөний жагсаалт</i> таб → «Номын 4 өнгө». Хүлээгдэх үр дүн: 4 зангилаа. dmesg хэсэгт:
 <pre><code>color[0]: red=138, green=43, blue=226
 color[1]: red=255, green=0, blue=0
 color[2]: red=0, green=255, blue=0
 color[3]: red=0, green=0, blue=255</code></pre>
   Санах ой (дөнгөж асаасан хөдөлгүүр дээр): kmalloc 4, kfree 0, амьд 4, 128 байт. Эхний зангилаа нь violet (138, 43, 226).</li>
-  <li>«Өнгөөр хайх», <code>red = 255</code> → «Олдсон» тодорно: <code>#2</code> (индекс 1). Хайлтын зам #1 → #2 ... анимацитай.</li>
-  <li>«Индексээр устгах», <code>index = 1</code> → <code>list_del(&amp;#2-&gt;list)</code>, <code>kfree(#2)</code>; граф #1 → #3 → #4 болно. Тоолуур: kmalloc 4 / kfree 1 / амьд 3 / 96 байт.</li>
-  <li>«Бүх бүтцийг хоослох» → амьд 0.</li>
+  <li>«Өнгөөр хайх», <code>red = 255</code>. «Олдсон» тодорно: <code>#2</code> (индекс 1). Хайлтын зам #1 → #2 анимацитай.</li>
+  <li>«Индексээр устгах», <code>index = 1</code>. <code>list_del(&amp;#2-&gt;list)</code>, <code>kfree(#2)</code> болж, граф #1 → #3 → #4 болно. Тоолуур: kmalloc 4 / kfree 1 / амьд 3 / 96 байт.</li>
+  <li>«Бүх бүтцийг хоослох». Амьд зангилаа 0 болно.</li>
 </ol>
-<figure class="shot"><img src="../img/crop/f1_color_example.png" alt="Жишээ 1"><figcaption>Жишээ 1, алхам 1: «Номын 4 өнгө» (бодит screenshot).</figcaption></figure>
+<figure><img src="../img/crop/f1_color_example.png" alt="Жишээ 1"><figcaption>Жишээ 1, алхам 1: «Номын 4 өнгө» (бодит screenshot).</figcaption></figure>
 <h3>Жишээ 2 — Part II: Collatz дараалал, хайх, алдаа</h3>
 <ol>
-  <li><i>Collatz</i> таб → «Дараалал үүсгэх», <code>start = 27</code>. Хүлээгдэх: 112 зангилаа, 111 алхам, оргил 9232; 27 → 82 → 41 → 124 → 62 → 31 → …; Амьд зангилаа 112 (24 B × 112 = 2,688 байт).</li>
-  <li>«Утгаар хайх», <code>value = 9232</code> → хайлт эхнээс явж 77-р индексэд (оргил) олдоно.</li>
-  <li><b>Алдааны шалгалт.</b> «Командыг шууд оруулах» хэсэгт <code>collatz run start=0</code> гэж бичиж илгээнэ (энэ нь форм биш: «Дараалал үүсгэх» формын <code>start</code> талбар <code>min=1</code> тул browser <code>0</code>-г өөрөө хаадаг бөгөөд engine хүртэл хүрэхгүй). Улаан мөр <b>E_RANGE</b>; граф (112 зангилаа) болон тоолуур <b>өөрчлөгдөхгүй</b>.</li>
-  <li>«Утгаар устгах», <code>value = 9232</code> → 111 зангилаа.</li>
-  <li>«Дараалал үүсгэх», <code>start = 837799</code> → 525 зангилаа, оргил 2974984576 (int32-ээс их, тиймээс 64 бит).</li>
+  <li><i>Collatz</i> таб → «Дараалал үүсгэх», <code>start = 27</code>. Хүлээгдэх үр дүн: 112 зангилаа, 111 алхам, оргил 9232; 27 → 82 → 41 → 124 → 62 → 31 → … Амьд зангилаа 112 (24 B × 112 = 2,688 байт).</li>
+  <li>«Утгаар хайх», <code>value = 9232</code>. Хайлт эхнээс явж 77-р индексэд (оргил) олдоно.</li>
+  <li><b>Алдааны шалгалт.</b> «Командыг шууд оруулах» хэсэгт <code>collatz run start=0</code> гэж бичиж илгээнэ. Энэ нь форм биш: «Дараалал үүсгэх» формын <code>start</code> талбар <code>min=1</code> тул browser <code>0</code>-г өөрөө хаадаг бөгөөд engine хүртэл хүрэхгүй. Улаан мөр <b>E_RANGE</b> гарна. Граф (112 зангилаа) болон тоолуур <b>өөрчлөгдөхгүй</b>.</li>
+  <li>«Утгаар устгах», <code>value = 9232</code>. 111 зангилаа үлдэнэ.</li>
+  <li>«Дараалал үүсгэх», <code>start = 837799</code>. 525 зангилаа, оргил 2974984576 (int32-ээс их, тиймээс 64 бит).</li>
 </ol>
-<figure class="shot"><img src="../img/crop/f4_error.png" alt="Жишээ 2"><figcaption>Жишээ 2, алхам 3: <code>collatz run start=0</code> → E_RANGE; 112 зангилаатай төлөв өөрчлөгдөөгүй (бодит screenshot; тухайн зургийг ижил командыг URL-ийн <code>?run=</code>-аар илгээж авсан).</figcaption></figure>
+<figure><img src="../img/crop/f4_error.png" alt="Жишээ 2"><figcaption>Жишээ 2, алхам 3: <code>collatz run start=0</code> → E_RANGE; 112 зангилаатай төлөв өөрчлөгдөөгүй (бодит screenshot; ижил командыг URL-ийн <code>?run=</code>-аар илгээж авсан).</figcaption></figure>
 <h3>Жишээ 3 — Стек (LIFO) ба дараалал (FIFO)</h3>
-<p><i>Стек</i>: push 10, push 42, push −2 → TOP = −2; pop → −2 гарна, TOP = 42. <i>Дараалал</i>: enqueue 10, enqueue 42 → FRONT = 10, REAR = 42; dequeue → 10 гарна.</p>
+<p><i>Стек</i>: push 10, push 42, push −2. TOP = −2 болно. pop хийвэл −2 гарч, TOP = 42 болно.</p>
+<p><i>Дараалал</i>: enqueue 10, enqueue 42. FRONT = 10, REAR = 42 болно. dequeue хийвэл 10 гарна.</p>
 <h3>Жишээ 4 — Командыг URL-ээр ажиллуулах</h3>
 <p><code>http://127.0.0.1:8080/?run=reset;color%20example;color%20delete%20index=1</code> — reset хийгээд номын жишээг үүсгэж, 1-р индексийг устгана.</p>
 <h3>Жишээ 5 — ENOMEM тарилга</h3>
-<p>«Командыг шууд оруулах» хэсэгт <code>inject_fail after=2</code>, дараа нь <code>color add_tail red=1 green=2 blue=3</code>-ийг гурав гүйцэтгэнэ. Эхний хоёр амжилттай, <b>гурав дахь нь E_NOMEM</b> («kmalloc failed; the previous state is preserved») — граф өөрчлөгдөхгүй. <code>inject_fail off</code> — унтраана.</p>
-<h2>8.1.8 Түгээмэл алдаа ба шийдэл</h2>
+<p>«Командыг шууд оруулах» хэсэгт <code>inject_fail after=2</code> гэж бичнэ. Дараа нь <code>color add_tail red=1 green=2 blue=3</code>-ийг гурав гүйцэтгэнэ. Эхний хоёр нь амжилттай. <b>Гурав дахь нь E_NOMEM</b> («kmalloc failed; the previous state is preserved») өгч, граф өөрчлөгдөхгүй. <code>inject_fail off</code> тарилгыг унтраана.</p>
+<h2 class="pb">8.1.8 Түгээмэл алдаа ба шийдэл</h2>
 <table>
   <caption>Хүснэгт 3. Түгээмэл алдаа</caption>
-  <thead><tr><th>Харагдах зүйл</th><th>Шалтгаан</th><th>Шийдэл</th></tr></thead>
+  <thead><tr><th style="width:31%">Харагдах зүйл</th><th style="width:36%">Шалтгаан</th><th>Шийдэл</th></tr></thead>
   <tbody>
-    <tr><td>Хуудас нээгдэхгүй; «Холболтын алдаа»</td><td>Сервер ажиллахгүй / өөр порт</td><td><code>make run</code> ажиллаж байгаа эсэх, терминал дахь хаягийг шалгах</td></tr>
+    <tr><td>Хуудас нээгдэхгүй; «Холболтын алдаа»</td><td>Сервер ажиллахгүй, эсвэл өөр порт</td><td><code>make run</code> ажиллаж байгаа эсэх, терминал дахь хаягийг шалгах</td></tr>
     <tr><td><code>Address already in use</code></td><td>8080 порт завгүй</td><td><code>python3 src/ui/server.py --port 8081</code> (эсвэл өөр процессыг зогсоох)</td></tr>
-    <tr><td><code>build/kds_engine</code> олдохгүй / <code>make run</code> унана</td><td>Бүтээгээгүй</td><td>Эхлээд <code>make</code></td></tr>
+    <tr><td><code>build/kds_engine</code> олдохгүй; <code>make run</code> унана</td><td>Бүтээгээгүй</td><td>Эхлээд <code>make</code></td></tr>
     <tr><td><code>cc: command not found</code>, <code>make: command not found</code>, <code>python3: command not found</code></td><td>Хэрэгсэл суулгаагүй</td><td>gcc, make, python3 суулгах (8.2.3)</td></tr>
-    <tr><td><b>E_RANGE</b> (өнгө 256, −1; index; start 0, 2147483648)</td><td>Хязгаараас хэтэрсэн (формын <code>min</code>/<code>max</code> нь ихэнхийг browser дээр нь хаадаг; «Командыг шууд оруулах» эсвэл HTTP-ээр шууд илгээвэл engine <b>E_RANGE</b> буцаана)</td><td>Өнгө 0…255, <code>start</code> 1…2147483647, индекс 0…(тоо−1)</td></tr>
+    <tr><td><b>E_RANGE</b> (өнгө 256, −1; index; start 0, 2147483648)</td><td>Хязгаараас хэтэрсэн. Формын <code>min</code>/<code>max</code> нь ихэнхийг browser дээр нь хаадаг. «Командыг шууд оруулах» эсвэл HTTP-ээр шууд илгээвэл engine <b>E_RANGE</b> буцаана.</td><td>Өнгө 0…255, <code>start</code> 1…2147483647, индекс 0…(тоо−1)</td></tr>
     <tr><td><b>E_BAD_VALUE</b></td><td>Тоо биш утга (<code>abc</code>)</td><td>Аравтын бүхэл тоо оруулах</td></tr>
-    <tr><td><b>E_MISSING_ARG</b> / <b>E_UNKNOWN_ARG</b> / <b>E_SYNTAX</b></td><td>Дутуу, мэдэхгүй, давхардсан аргумент, 512-аас урт мөр</td><td>Командыг <code>key=value</code> хэлбэрээр, нэг түлхүүрийг нэг удаа бичих</td></tr>
+    <tr><td><b>E_MISSING_ARG</b> / <b>E_UNKNOWN_ARG</b> / <b>E_SYNTAX</b></td><td>Дутуу, мэдэхгүй, давхардсан аргумент, эсвэл 512-аас урт мөр</td><td>Командыг <code>key=value</code> хэлбэрээр, нэг түлхүүрийг нэг удаа бичих</td></tr>
     <tr><td><b>E_EMPTY</b></td><td>Хоосон стек/дарааллаас pop/dequeue/peek</td><td>Эхлээд push/enqueue хийх</td></tr>
     <tr><td><b>E_NOT_FOUND</b></td><td>Хайлт/устгал тохирохгүй</td><td>Хэвийн; өөр утга өгөх</td></tr>
     <tr><td><b>E_FULL</b></td><td><code>--max-nodes</code> хязгаар дүүрсэн</td><td>Хоослох/reset, эсвэл <code>--max-nodes</code>-ийг нэмэх</td></tr>
     <tr><td><b>E_NOMEM</b></td><td>Тарьсан санах ойн алдаа (<code>inject_fail</code>)</td><td><code>inject_fail off</code> эсвэл «Бүх бүтцийг хоослох»</td></tr>
-    <tr><td>Үйлдлийн товч идэвхгүй, «Түүхийн агшин — зөвхөн уншина»</td><td>Өнгөрсөн алхмыг үзэж байна</td><td>«Сүүлийн алхам» товч</td></tr>
+    <tr><td>Үйлдлийн товч идэвхгүй; «Түүхийн агшин — зөвхөн уншина»</td><td>Өнгөрсөн алхмыг үзэж байна</td><td>«Сүүлийн алхам» товч</td></tr>
     <tr><td>Хуучин дүрслэл харагдана</td><td>Browser-ийн кэш</td><td>Хуудсыг шахан дахин ачаалах (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd>)</td></tr>
   </tbody>
 </table>
 
-<h1 class="pb">8.2 Operational заавар</h1>
+<h1>8.2 Operational заавар</h1>
 <h2>8.2.1 Repository clone хийх</h2>
-<pre><code>git clone &lt;GitHub холбоос&gt; kernel-data-structures
+<pre><code>git clone https://github.com/Ulmj7/OS_BD1_4-2-4.git kernel-data-structures
 cd kernel-data-structures</code></pre>
-<p><b>Холбоос байхгүй бол (оффлайн):</b> хүргэж өгсөн <code>kernel-data-structures</code> хавтсыг (эсвэл архивыг) өөрийн компьютерт хуулж, архив бол задлаад хавтас руу орно. Дараагийн бүх алхам ижил.</p>
+<p><b>Холбоос байхгүй бол (оффлайн).</b> Хүргэж өгсөн <code>kernel-data-structures</code> хавтсыг (эсвэл архивыг) өөрийн компьютерт хуулна. Архив бол задлаад хавтас руу орно. Дараагийн бүх алхам ижил.</p>
 <pre><code>cp -r /зам/kernel-data-structures ~/kernel-data-structures    # эсвэл: tar -xf kernel-data-structures.tar
 cd ~/kernel-data-structures</code></pre>
 <p>Агуулга: <code>README.md</code>, <code>Makefile</code>, <code>src/</code> (<code>shim/</code>, <code>kernel/</code>, <code>engine/</code>, <code>ui/</code>), <code>tests/</code>, <code>docs/</code>.</p>
 <h2>8.2.2 OS, compiler/runtime, хувилбар</h2>
 <table>
-  <thead><tr><th>Зүйл</th><th>Туршсан хувилбар</th><th>Тайлбар</th></tr></thead>
+  <thead><tr><th style="width:21%">Зүйл</th><th style="width:38%">Туршсан хувилбар</th><th>Тайлбар</th></tr></thead>
   <tbody>
-    <tr><td>OS</td><td>Arch Linux, Linux 7.2.11-arch1-1 x86_64</td><td>Өөр Linux тархалтад туршаагүй</td></tr>
+    <tr><td>OS ба кернел</td><td>Arch Linux, Linux 7.2.11-arch1-1 x86_64</td><td>Өөр Linux тархалтад туршаагүй</td></tr>
     <tr><td>C compiler</td><td>gcc (GCC) 16.2.1 20260810</td><td>GNU C11 (<code>-std=gnu11</code>), <code>__typeof__</code> ашигладаг; ASan/UBSan дэмжих ёстой</td></tr>
     <tr><td>make</td><td>GNU Make 4.4.1</td><td></td></tr>
     <tr><td>python3</td><td>3.14.8</td><td>Зөвхөн стандарт сан</td></tr>
-    <tr><td>Browser</td><td>Brave 156.1.98.60 (Chromium)</td><td>Зөвхөн Chromium-д туршсан</td></tr>
+    <tr><td>Browser</td><td>Brave 156.1.98.62 (Chromium)</td><td>Зөвхөн Chromium-д туршсан. Screenshot-ыг өмнөх 156.1.98.60-аар авсан.</td></tr>
+    <tr><td>Кернелийн header</td><td>linux-headers 7.2.11.arch1-1</td><td>Зөвхөн <code>.ko</code> бүтээхэд (8.2.7). <code>make test</code> хэрэглэхгүй.</td></tr>
   </tbody>
 </table>
 <p class="small">Хамгийн бага шаардлагатай хувилбарыг тодорхойлоогүй (зөвхөн дээрх хувилбараар туршсан).</p>
 <h2>8.2.3 Dependency суулгах</h2>
-<p>Гуравдагч талын сан <b>шаардахгүй</b>. Хэрэгсэл байхгүй бол (жишээ; энэ тайланд ажиллуулаагүй):</p>
+<p>Гуравдагч талын сан <b>шаардахгүй</b>. Хэрэгсэл байхгүй бол дараах командыг ашиглана (жишээ; энд ажиллуулаагүй):</p>
 <pre><code># Arch Linux
 sudo pacman -S gcc make python
 # Debian / Ubuntu
 sudo apt install build-essential python3</code></pre>
-<p>Kernel module бүтээхэд (заавал биш, 8.2.7) kernel header хэрэгтэй (жишээ нь Arch: <code>linux-headers</code>, Debian/Ubuntu: <code>linux-headers-$(uname -r)</code>).</p>
+<p>Кернел модуль бүтээхэд (заавал биш, 8.2.7) ажиллаж буй кернелтэй <b>ижил хувилбарын</b> header хэрэгтэй. Arch дээр <code>linux-headers</code>, Debian/Ubuntu дээр <code>linux-headers-$(uname -r)</code> багц. Багийн гишүүн Arch дээр <code>pacman</code>-аар суулгасан: <code>linux</code> ба <code>linux-headers</code> хоёулаа 7.2.11.arch1-1.</p>
 <h2>8.2.4 Build ба Run командууд</h2>
 <table>
-  <thead><tr><th>Команд</th><th>Үр дүн</th></tr></thead>
+  <thead><tr><th style="width:36%">Команд</th><th>Үр дүн</th></tr></thead>
   <tbody>
     <tr><td><code>make</code></td><td><code>build/kds_engine</code>, <code>build/libkds.a</code> (shim + engine core)</td></tr>
-    <tr><td><code>make test</code></td><td>Бүх тест (<code>build/sanitized/</code> дахь ASan+UBSan build-ээр); алдаатай бол 0-ээс өөр кодтой гарна</td></tr>
+    <tr><td><code>make test</code></td><td>Бүх тест (<code>build/sanitized/</code> дахь ASan+UBSan build-ээр). Алдаатай бол 0-ээс өөр кодтой гарна. SIGINT (Ctrl+C) үл тоомсорлогдсон орчинд (жишээ нь <code>nohup</code>, CI) ч ажиллана.</td></tr>
     <tr><td><code>make run</code></td><td>UI сервер: <code>python3 src/ui/server.py --port 8080 --max-nodes 2048 --engine build/kds_engine</code></td></tr>
-    <tr><td><code>make module KDIR=/path/to/kernel/build</code></td><td>Жинхэнэ kernel module (Kbuild); kernel header шаардана</td></tr>
-    <tr><td><code>make clean</code></td><td><code>build/</code>, кэш, kernel build үлдэгдлийг устгана</td></tr>
+    <tr><td><code>make module KDIR=…</code></td><td>Жинхэнэ кернел модуль (Kbuild) <code>src/kernel/*.ko</code>. Кернелийн header шаардана (8.2.7). <code>KDIR</code> заагаагүй бол <code>/lib/modules/$(uname -r)/build</code> ашиглана.</td></tr>
+    <tr><td><code>make clean</code></td><td><code>build/</code>, кэш болон кернелийн build үлдэгдлийг устгана. <b>Анхаар:</b> <code>src/kernel/*.ko</code> файлуудыг мөн устгана.</td></tr>
   </tbody>
 </table>
-<p>Хөдөлгүүрийг шууд (UI-гүй) ажиллуулах — нэг команд = нэг мөр, хариу = нэг мөр JSON:</p>
+<p>Хөдөлгүүрийг шууд (UI-гүй) ажиллуулж болно. Нэг команд = нэг мөр, хариу = нэг мөр JSON:</p>
 <pre><code>printf 'color example\ncolor delete index=1\nstate\n' | build/kds_engine
 build/kds_engine --max-nodes 3 &lt; tests/cases/max_nodes.in</code></pre>
 <h2>8.2.5 Үндсэн тестийн өгөгдөл</h2>
 <table>
-  <thead><tr><th>Файл</th><th>Агуулга</th></tr></thead>
+  <thead><tr><th style="width:38%">Файл</th><th>Агуулга</th></tr></thead>
   <tbody>
     <tr><td><code>tests/test_list.c</code></td><td>Өөрийн <code>list.h</code>: unit + 5,000 санамсаргүй үйлдэл (seed <code>0x0c011a72</code>)</td></tr>
-    <tr><td><code>tests/test_color_module.c</code>, <code>test_collatz_module.c</code></td><td>Жинхэнэ module <code>.c</code> + shim: printk, leak, ENOMEM; Collatz 1, 15, 25, 27, 97, 837799, 2147483647</td></tr>
+    <tr><td><code>tests/test_color_module.c</code>, <code>test_collatz_module.c</code></td><td>Жинхэнэ модулийн <code>.c</code> + shim: printk, leak, ENOMEM. Collatz 1, 15, 25, 27, 97, 837799, 2147483647</td></tr>
     <tr><td><code>tests/test_core.c</code></td><td>Engine core, <code>kds_verify</code>-ийн 10 эвдэрсэн жагсаалт</td></tr>
     <tr><td><code>tests/cases/*.in</code> + <code>*.expected.json</code></td><td>9 бүлэг: <code>book_example</code>, <code>color_operations</code>, <code>boundary_errors</code>, <code>stack_queue</code>, <code>collatz_reference</code>, <code>max_nodes</code>, <code>allocation_failure</code>, <code>ignored_lines</code>, <code>binary_garbage</code></td></tr>
     <tr><td><code>tests/run_cases.py</code></td><td>Сценарийн тест (<code>python3 tests/run_cases.py --engine build/kds_engine</code>)</td></tr>
-    <tr><td><code>tests/test_server.py</code></td><td>HTTP серверийн 11 тест (процессын бүлэгт SIGINT илгээж цэвэр shutdown шалгах тест орно)</td></tr>
-    <tr><td><code>tests/ui/browser_check.py</code>, <code>tests/ui/interactions.py</code></td><td><b>Заавал биш</b> UI шалгалт (Brave/Chromium, CDP): 4 таб, 112 зангилаа ба 226 сум, хайлт/устгал, RGB баталгаажуулалт, түүх, zoom/pan, горим, 320/390 px, JS алдаагүй. <code>make test</code>-д ороогүй</td></tr>
+    <tr><td><code>tests/test_server.py</code></td><td>HTTP серверийн 12 тест. Үүнд процессын бүлэгт SIGINT илгээж цэвэр shutdown шалгах 2 тест орно: энгийн, мөн SIGINT-ийг «үл тоомсорлох» төлөвтэй өвлөсөн үед.</td></tr>
+    <tr><td><code>tests/ui/browser_check.py</code>, <code>tests/ui/interactions.py</code></td><td><b>Заавал биш</b> UI шалгалт (Brave/Chromium, CDP): 4 таб, 112 зангилаа ба 226 сум, хайлт/устгал, RGB баталгаажуулалт, түүх, zoom/pan, горим, 320/390 px, JS алдаагүй. <code>make test</code>-д ороогүй.</td></tr>
     <tr><td><code>tests/README.md</code></td><td>Тест бүрийн оролт, хүлээгдсэн үр дүн, гарал үүсэл</td></tr>
   </tbody>
 </table>
-<p><b>UI шалгалт ажиллуулах (заавал биш):</b> нэг терминалд <code>make run</code>, нөгөөд нь дараалан <code>python3 tests/ui/browser_check.py</code>, <code>python3 tests/ui/interactions.py</code>. Скриптүүд хөдөлгүүрийг дахин эхлүүлж төлөвийг <b>солино</b>; screenshot-ыг <code>/tmp/kds-ui-check</code>-д хадгална. Орчны хувьсагч: <code>KDS_URL</code> (өөр сервер), <code>KDS_BROWSER</code> (browser-ийн зам), <code>KDS_OUTPUT</code> (гаралтын хавтас). Скриптүүд зөвхөн итгэмжит локал UI-д зориулагдсан түр headless browser (<code>--no-sandbox</code>) асаана.</p>
+<p><b>UI шалгалт ажиллуулах (заавал биш).</b> Нэг терминалд <code>make run</code>, нөгөөд нь дараалан <code>python3 tests/ui/browser_check.py</code>, <code>python3 tests/ui/interactions.py</code> ажиллуулна. Скриптүүд хөдөлгүүрийг дахин эхлүүлж төлөвийг <b>солино</b>. Screenshot-ыг <code>/tmp/kds-ui-check</code>-д хадгална.</p>
+<p>Орчны хувьсагч: <code>KDS_URL</code> (өөр сервер), <code>KDS_BROWSER</code> (browser-ийн зам), <code>KDS_OUTPUT</code> (гаралтын хавтас). Скриптүүд зөвхөн итгэмжит локал UI-д зориулагдсан түр headless browser (<code>--no-sandbox</code>) асаана.</p>
 <p>Collatz лавлагааг дахин үүсгэх (Python, production кодыг ашиглахгүй): <code>python3 tests/reference_cases.py</code>.</p>
 <h2>8.2.6 Нэмэлт boundary/error тест ба хүлээгдсэн үр дүн</h2>
-<p><b>Хөдөлгүүрийн түвшин</b> (<code>printf '…\n' | build/kds_engine</code>): алдаа бүрт <code>"ok":false</code>, <code>error.code</code> доорх шиг, <b>төлөв, kmalloc тоолуур өөрчлөгдөхгүй</b>.</p>
+<p><b>Хөдөлгүүрийн түвшин</b> (<code>printf '…\n' | build/kds_engine</code>). Алдаа бүрт <code>"ok":false</code> ба <code>error.code</code> доорх шиг гарна. <b>Төлөв, kmalloc тоолуур өөрчлөгдөхгүй.</b></p>
 <table>
-  <thead><tr><th>Команд</th><th>Хүлээгдсэн <code>error.code</code></th></tr></thead>
+  <thead><tr><th>Команд</th><th style="width:36%">Хүлээгдсэн <code>error.code</code></th></tr></thead>
   <tbody>
     <tr><td><code>color add_tail red=256 green=0 blue=0</code>; <code>red=-1 …</code></td><td>E_RANGE</td></tr>
     <tr><td><code>color add_tail red=abc green=0 blue=0</code></td><td>E_BAD_VALUE</td></tr>
@@ -266,47 +275,81 @@ build/kds_engine --max-nodes 3 &lt; tests/cases/max_nodes.in</code></pre>
     <tr><td><code>inject_fail after=2</code> дараа 3-р <code>color add_tail …</code></td><td>E_NOMEM; <code>inject_fail off</code> дараа амжилттай</td></tr>
   </tbody>
 </table>
-<p><b>Collatz хүлээгдсэн утга:</b> <code>collatz run start=N</code> → N=1: 1 зангилаа; 15: 18; 25: 24; 27: 112 (оргил 9232); 97: 119 (оргил 9232); 837799: 525 (оргил 2974984576); 2147483647: 451 (оргил 1235346792567892).</p>
+<p><b>Collatz хүлээгдсэн утга.</b> <code>collatz run start=N</code>: N=1 үед 1 зангилаа; 15: 18; 25: 24; 27: 112 (оргил 9232); 97: 119 (оргил 9232); 837799: 525 (оргил 2974984576); 2147483647: 451 (оргил 1235346792567892).</p>
 <p><b>HTTP түвшин</b> (сервер асаалттай; хүлээгдсэн статус нь бодитоор шалгагдсан):</p>
-<pre><code>U=http://127.0.0.1:8080
-curl -s -X POST -H 'Content-Type: application/json' -d '{"cmd":"color example"}' $U/api/cmd   # 200, "ok":true
-curl -s -X POST -H 'Content-Type: text/plain' -d '{"cmd":"state"}' $U/api/cmd                  # 400 E_SYNTAX
-curl -s -X POST -H 'Content-Type: application/json' -d '{bad' $U/api/cmd                       # 400 E_SYNTAX
-curl -s -X POST -H 'Content-Type: application/json' -d '{"cmd":"state\nreset"}' $U/api/cmd     # 400 (нэг мөр биш)
-curl -s -X POST -H 'Origin: http://evil.example' -H 'Content-Type: application/json' \
-     -d '{"cmd":"state"}' $U/api/cmd                                                           # 403 E_ORIGIN
-curl -s --path-as-is -o /dev/null -w '%{http_code}\n' "$U/../Makefile"                         # 403
-curl -s -o /dev/null -w '%{http_code}\n' $U/nonexistent.js                                     # 404
-curl -s -X POST $U/api/restart                                                                  # 200, бүх бүтэц хоосон</code></pre>
-<h2>8.2.7 Жинхэнэ kernel module (заавар; энд ажиллуулаагүй)</h2>
-<div class="warn"><b>Анхааруулга.</b> Kernel module дээр алдаа гарвал систем гацаж болно. Зөвхөн <b>виртуал машин</b> дээр туршина. Энэ хэсгийн командуудыг тайланг бэлтгэх орчинд (kernel header байхгүй) <b>ажиллуулаагүй</b>; доорх үр дүн нь бодитоор баталгаажаагүй, зөвхөн кодоос хүлээгдэж буй зүйл.</div>
-<pre><code>make module KDIR=/lib/modules/$(uname -r)/build      # src/kernel/color_list.ko, collatz.ko
-sudo insmod src/kernel/color_list.ko &amp;&amp; dmesg | tail -n 4  # Part I
-sudo rmmod color_list
-sudo insmod src/kernel/collatz.ko start=15 &amp;&amp; dmesg | tail -n 18   # Part II (start орхивол 25)
+<pre class="long"><code>U=http://127.0.0.1:8080
+# 200, "ok":true
+curl -s -X POST -H 'Content-Type: application/json' \
+     -d '{"cmd":"color example"}' $U/api/cmd
+# 400 E_SYNTAX
+curl -s -X POST -H 'Content-Type: text/plain' -d '{"cmd":"state"}' $U/api/cmd
+# 400 E_SYNTAX
+curl -s -X POST -H 'Content-Type: application/json' -d '{bad' $U/api/cmd
+# 400 (нэг мөр биш)
+curl -s -X POST -H 'Content-Type: application/json' \
+     -d '{"cmd":"state\nreset"}' $U/api/cmd
+# 403 E_ORIGIN
+curl -s -X POST -H 'Origin: http://evil.example' \
+     -H 'Content-Type: application/json' -d '{"cmd":"state"}' $U/api/cmd
+# 403
+curl -s --path-as-is -o /dev/null -w '%{http_code}\n' "$U/../Makefile"
+# 404
+curl -s -o /dev/null -w '%{http_code}\n' $U/nonexistent.js
+# 200, бүх бүтэц хоосон
+curl -s -X POST $U/api/restart</code></pre>
+<h2>8.2.7 Жинхэнэ кернел модуль (суулгах, ачаалах, зайлуулах)</h2>
+<div class="keep">
+<p><b>Хэн гүйцэтгэсэн.</b> Доорх алхмыг багийн гишүүн 2026-10-30-нд өөрийн машин дээр (Arch Linux, Linux 7.2.11-arch1-1) өөрөө гүйцэтгэсэн. Үр дүнгийн тайлан: Report 8.7, 8.8.</p>
+<p><b>Анхааруулга.</b> Кернел модуль ажиллаж буй кернелд ачаалагдана. Алдаа гарвал систем гацаж болно. Ачаалахын өмнө ажлаа хадгална; боломжтой бол виртуал машин ашиглана. Secure Boot эсвэл модулийн гарын үсгийн (module signing) шаардлага гарын үсэггүй модулийг татгалзаж болно. Үүнийг бид шалгаагүй: багийн гишүүний машин дээр ачаалалт энгийнээр амжилттай болсон.</p>
+</div>
+<p><b>1. Header суулгах.</b> Header нь <code>uname -r</code>-тэй ижил хувилбартай байх ёстой. Arch дээр: <code>sudo pacman -S linux-headers</code>. Шалгах: <code>ls /usr/lib/modules/$(uname -r)/build</code> хавтас байх ёстой.</p>
+<p><b>2. Бүтээх.</b></p>
+<pre><code>make module KDIR=/usr/lib/modules/$(uname -r)/build</code></pre>
+<p>Хүлээгдэх гаралт: хоёр модуль тус бүрийн <code>CC [M]</code>, дараа нь <code>MODPOST</code>, <code>LD [M]</code>, <code>BTF [M]</code>. Алдаа, анхааруулга гарахгүй. <code>src/kernel/</code> дотор <code>color_list.ko</code> (213,424 B) ба <code>collatz.ko</code> (359,088 B) үүснэ. Хэмжээ нь зам, compiler-ээс хамаарч бага зэрэг өөр байж болно. <code>modinfo</code>: license GPL, vermagic <code>7.2.11-arch1-1 SMP preempt mod_unload</code>, <code>collatz</code>-д <code>start</code> (int) параметр.</p>
+<p><b>3. Part I: өнгө.</b></p>
+<pre><code>sudo insmod src/kernel/color_list.ko
+sudo dmesg | tail -20
+sudo rmmod color_list</code></pre>
+<p class="keep">Хүлээгдэх dmesg: дөрвөн мөр, эхнийх нь violet.</p>
+<pre><code>color[0]: red=138, green=43, blue=226
+color[1]: red=255, green=0, blue=0
+color[2]: red=0, green=255, blue=0
+color[3]: red=0, green=0, blue=255</code></pre>
+<p><b>4. Part II: Collatz.</b></p>
+<pre><code>sudo insmod src/kernel/collatz.ko start=27
+sudo dmesg | tail -130
 sudo rmmod collatz</code></pre>
-<p>Хүлээгдэх dmesg (формат нь shim дээр тест-ээр баталгаажсан): Part I — <code>color[0]: red=138, green=43, blue=226</code> … <code>color[3]: red=0, green=0, blue=255</code>; Part II, <code>start=15</code> — <code>collatz[0]: value=15</code> … <code>collatz[17]: value=1</code> (18 мөр). <code>start=0</code> үед init <code>-EINVAL</code> буцааж <code>insmod</code> алдаатай дуусах ба dmesg-д <code>collatz: start must be positive</code> гарна.</p>
+<p class="keep">Хүлээгдэх dmesg: <code>start=27</code> үед 112 мөр, индекс 0…111. Эхнээс 27, 82, 41, 124 …, индекс 77-д оргил 9232, төгсгөлд 4, 2, 1. 112 мөрийг бүгдийг нь харахын тулд <code>tail -130</code> хэрэглэнэ. Өмнөх хэдэн мөр хамт гарч болно.</p>
+<pre><code>collatz[0]: value=27
+collatz[1]: value=82
+...
+collatz[77]: value=9232
+...
+collatz[111]: value=1</code></pre>
+<p><b>5. Шалгах.</b> <code>rmmod</code>-ийн дараа <code>lsmod | grep -E 'color_list|collatz'</code> юу ч гаргахгүй. <code>insmod</code> ба <code>rmmod</code> алдаа өгөхгүй.</p>
+<p><b>Багийн гишүүн ажиллуулаагүй зүйл.</b> <code>start</code>-ийг орхивол анхдагч 25 (24 мөр), <code>start=15</code> үед 18 мөр байх ёстой. <code>start=0</code> үед <code>init</code> <code>-EINVAL</code> буцааж <code>insmod</code> алдаатай дуусах ба dmesg-д <code>collatz: start must be positive</code> гарах ёстой. Эдгээр нь зөвхөн shim дээрх тестээр баталгаажсан. Жинхэнэ кернел дээр ажиллуулаагүй.</p>
 <h2>8.2.8 Хүлээгдсэн <code>make test</code> үр дүн</h2>
-<p>Цэвэр хуулбар дээр <code>make &amp;&amp; make test</code> нь exit code 0-тэй дуусч (≈ 2 секунд), гол мөрүүд:</p>
+<p>Цэвэр хуулбар дээр <code>make &amp;&amp; make test</code> нь exit code 0-тэй дуусна (≈ 2.4–2.5 секунд). Гол мөрүүд:</p>
 <pre><code>Sanitizers: ASan + UBSan
 PASS real Collatz module: default 25, 7 references, 1250 injected failures, 2 invalid starts; zero leaks
 PASS real color module: exact printk, 4 colors, violet RGB, 4 ENOMEM positions + success boundary, no leaks
 PASS core commands, IDs, atomic errors, limits, ENOMEM sweep, 512-byte boundary, 10 corrupt lists
 PASS list API + seeded differential model + zero leaks
 CASES: 9 passed, 0 failed; 229 checked replies
-Ran 11 tests in 0.324s
+Ran 12 tests in 0.391s
 OK
 All available tests passed.</code></pre>
-<p>Хугацаа (0.324 s гэх мэт) болон санах ойн хаяг компьютер бүрд өөр байна.</p>
+<p>Хугацаа (0.391 s гэх мэт) болон санах ойн хаяг компьютер бүрд өөр байна. <code>make test</code> нь кернелийн header-ээс хамаарахгүй, модулийг ачаалдаггүй.</p>
 <h2>8.2.9 Known issues</h2>
 <ul>
-  <li>Жинхэнэ <code>.ko</code>-ийг энд бүтээж/ачаалж <b>туршаагүй</b> (kernel header байхгүй). Shim нь GFP флаг, SMP, санах ойн дарамтыг загварчлахгүй; ENOMEM нь хиймэл тарилга.</li>
-  <li><code>tests/test_server.py</code> нь Linux-ийн <code>/proc/net/tcp</code>-г ашигладаг; macOS/Windows-д ажиллахгүй байж болно.</li>
-  <li><code>make run</code> нь 8080 портыг тогтоосон; өөр порт хэрэгтэй бол серверийг шууд ажиллуулна (8.1.4). Порт завгүй бол Python алдааны мэдээлэл (traceback) гарна.</li>
+  <li><b>Кернел дээрх шалгалт нарийвчилсан биш.</b> Модулиудыг багийн гишүүн нэг машин, нэг кернелийн хувилбар (7.2.11-arch1-1) дээр нэг удаа ачаалсан (8.2.7, Report 8.8). Буруу ба захын <code>start</code>, ENOMEM замууд, санах ойн алдагдал (kmemleak), <code>rmmod</code>-ийн дараах кернелийн гаралт кернел дээр шалгагдаагүй.</li>
+  <li>Shim нь GFP флаг, SMP, санах ойн дарамтыг загварчлахгүй. ENOMEM нь хиймэл тарилга.</li>
+  <li><code>tests/test_server.py</code> нь Linux-ийн <code>/proc/net/tcp</code>-г ашигладаг. macOS/Windows-д ажиллахгүй байж болно.</li>
+  <li><code>make run</code> нь 8080 портыг тогтоосон. Өөр порт хэрэгтэй бол серверийг шууд ажиллуулна (8.1.4). Порт завгүй бол Python алдааны мэдээлэл (traceback) гарна.</li>
   <li>UI-г зөвхөн Chromium (Brave 156)-ээр шалгасан. UI-ийн автомат шалгалт <code>tests/ui/browser_check.py</code>, <code>tests/ui/interactions.py</code> нь <code>make test</code>-д <b>ороогүй</b>, суулгасан Brave/Chromium шаарддаг (8.2.5).</li>
-  <li><code>collatz delete</code> нь дурын зангилааг устгадаг тул дараалал Collatz-ийн дүрмээс гажиж болно (энэ нь жагсаалтын үйлдлийг үзүүлэх зорилготой).</li>
+  <li><code>collatz delete</code> нь дурын зангилааг устгадаг тул дараалал Collatz-ийн дүрмээс гажиж болно. Энэ нь жагсаалтын үйлдлийг үзүүлэх зорилготой.</li>
   <li>Амжилтгүй команд түр аллокацийг буцаадаг тул kmalloc-ийн дугаарт (<code>#</code>) зай гарч болно.</li>
-  <li>Сервер зөвхөн локал (127.0.0.1) хэрэглээнд зориулсан, олон хэрэглэгчийн орчин биш.</li>
+  <li>Сервер зөвхөн локал (127.0.0.1) хэрэглээнд зориулсан. Олон хэрэглэгчийн орчин биш.</li>
   <li>Repository-г GitHub-д push хийгээгүй, Release/Tag үүсгээгүй; peer review энэ хувилбарт хийгдээгүй.</li>
 </ul>
 </body></html>

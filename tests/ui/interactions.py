@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Optional real-browser check, adapted from the developer CDP script; stdlib only."""
+"""Optional real-browser check, using CDP; stdlib only."""
 import base64
 import hashlib
 import shutil

@@ -6,8 +6,8 @@
 | **Хуваарилалтын код** | **IV-2-4** |
 | **Төсөл** | Kernel Data Structures (OS Concepts 10e, Chapter 3, Programming Project 4) |
 | **Үндсэн UI дүрслэл** | Kernel structure graph (элемент нэмэх / устгах / хайх үйлдлийн дараах бүтцийг графаар харуулна) |
-| **Гишүүд** | B200900028 [нэр] · B221910021 [нэр] · B231910034 [нэр] · B232270805 [нэр] · B241940102 [нэр] · B242270075 [нэр] |
-| **GitHub** | https://github.com/Ulmj7/Operating_System_BD1 |
+| **Гишүүд** | Б. Лхамрагчаа (B241940102) · Г. Үлэмж (B232270805) · Т. Буянтөгс (B231910034) · Э. Төгсбаяр (221910021) · Ө. Чинзориг (200900028) · Б. Идэрбат (B242270075) |
+| **GitHub** | https://github.com/Ulmj7/OS_BD1_4-2-4 |
 
 ## Зорилго
 
@@ -24,9 +24,13 @@ Linux kernel-ийн дугуй (circular) хоёр чиглэлт холбоос
 * **Part II** — `collatz` module: `start` параметр (default 25) авч, Collatz дарааллыг kernel
   жагсаалтад хадгалж, хэвлэж, гарахад чөлөөлөх (`src/kernel/collatz.c`).
 
-> **Анхаарах:** энэ компьютерт kernel header байхгүй тул жинхэнэ `.ko` файлыг **бүтээж, `insmod`
-> хийж туршаагүй**. Module-ийн эх кодыг user-space дахь өөрсдийн `linux/*.h` shim (`src/shim/`)-тэй
-> **өөрчлөлтгүйгээр** хөрвүүлж, тестлэсэн. Бодит kernel дээр ажиллуулах заавар `docs/IV-2-4_Manual.pdf`-д.
+> **Бодит кернел дээр:** `color_list.ko` ба `collatz.ko`-г `make module KDIR=/usr/lib/modules/$(uname -r)/build`-ээр
+> бүтээж (linux-headers 7.2.11.arch1-1), багийн гишүүн өөрийн машин дээр (Arch Linux, Linux 7.2.11-arch1-1)
+> 2026-10-30-нд `sudo insmod` → `dmesg` → `sudo rmmod`-оор ачаалж туршсан: өнгөний 4 мөр, `collatz start=27`
+> үед 112 мөр (оргил 9232) гарч, shim дээрх үр дүнтэй таарсан. Харин кернел дээр
+> буруу/захын `start`, ENOMEM, санах ойн алдагдал (kmemleak) шалгаагүй. Module-ийн эх кодыг user-space дахь
+> өөрсдийн `linux/*.h` shim (`src/shim/`)-тэй **өөрчлөлтгүйгээр** хөрвүүлж тестлэдэг (`make test` кернелд ачаалдаггүй).
+> Дэлгэрэнгүй: тайлан 8.7–8.8, `docs/IV-2-4_Manual_final.pdf` 8.2.7.
 
 ## Quick Start
 
@@ -34,7 +38,7 @@ Linux kernel-ийн дугуй (circular) хоёр чиглэлт холбоос
 Гаднаас сан суулгах, root эрх, интернет **шаардлагагүй**.
 
 ```sh
-git clone https://github.com/Ulmj7/Operating_System_BD1.git kernel-data-structures
+git clone https://github.com/Ulmj7/OS_BD1_4-2-4.git kernel-data-structures
 cd kernel-data-structures
 make            # build/kds_engine болон build/libkds.a-г бүтээнэ
 make test       # бүх тест (C unit, engine cases, HTTP server; ASan+UBSan) — алдаатай бол 0-ээс өөр кодтой гарна
@@ -42,13 +46,20 @@ make run        # UI-г http://127.0.0.1:8080 дээр асаана (зөвхө�
 ```
 
 Browser-ээр `http://127.0.0.1:8080` нээгээд **Color / Collatz / Stack / Queue** табуудаас үйлдэл
-хийнэ. Дэлгэрэнгүй нь `docs/IV-2-4_Manual.pdf`. Жишээ нь URL-ээр автоматаар ажиллуулж болно:
+хийнэ. Дэлгэрэнгүй нь `docs/IV-2-4_Manual_final.pdf`. Жишээ нь URL-ээр автоматаар ажиллуулж болно:
 
 ```
 http://127.0.0.1:8080/?run=color%20example;color%20delete%20index=1
 ```
 
-Жинхэнэ Linux kernel дээр (kernel header-тэй машинд): `make module` (`src/kernel/Makefile`, Kbuild).
+Жинхэнэ Linux кернелд (кернелийн header-тэй машинд; дэлгэрэнгүй `docs/IV-2-4_Manual_final.pdf` 8.2.7):
+
+```sh
+make module KDIR=/usr/lib/modules/$(uname -r)/build     # src/kernel/color_list.ko, collatz.ko (src/kernel/Makefile, Kbuild)
+sudo insmod src/kernel/collatz.ko start=27 ; sudo dmesg | tail -130 ; sudo rmmod collatz
+```
+
+Анхаар: кернел модуль ажиллаж буй кернелд ачаалагдана; ажлаа хадгалж, боломжтой бол виртуал машин ашиглана.
 
 ## Репозиторийн бүтэц
 
@@ -56,12 +67,13 @@ http://127.0.0.1:8080/?run=color%20example;color%20delete%20index=1
 README.md
 Makefile                 make / make test / make run / make module / make clean
 src/shim/                user-space "linux/*.h" shim: list.h (өөрийн хэрэгжилт), kmalloc/kfree, printk, module_param
-src/kernel/              БОДИТ kernel module-ийн эх код: color_list.c, collatz.c, Kbuild Makefile
+src/kernel/              БОДИТ кернел модулийн эх код: color_list.c, collatz.c, Kbuild Makefile
 src/engine/              kds_core.{h,c}, main.c -> build/kds_engine (stdin команд -> нэг мөр JSON)
 src/ui/server.py         python3 stdlib HTTP сервер (127.0.0.1), нэг тогтвортой engine процесс
 src/ui/static/           index.html, app.js, style.css — SVG граф, офлайн, light/dark
 tests/                   test_*.c, cases/*.in + expected, run_cases.py, test_server.py, README.md
-docs/                    IV-2-4_BD1_Report.pdf, IV-2-4_Manual.pdf, IV-2-4_Teams_Post.md, img/ (бодит screenshot), src/ (PDF-ийн HTML эх)
+video/                   IV-2-4_BD1_Demo.mp4 — танилцуулах видео
+docs/                    IV-2-4_BD1_Report_final.pdf, IV-2-4_Manual_final.pdf, IV-2-4_Teams_Post.md, img/ (бодит screenshot), src/ (PDF-ийн HTML эх)
 ```
 
 ## Тест
@@ -73,21 +85,23 @@ docs/                    IV-2-4_BD1_Report.pdf, IV-2-4_Manual.pdf, IV-2-4_Teams_
   `printk` гаралт, `kmalloc == kfree`, `kmalloc` бүрийн байрлалд ENOMEM тарьж leak шалгана
 * `tests/test_core.c` — engine-ийн бүх команд, зориудаар эвдсэн жагсаалтыг `kds_verify` барьж буй эсэх
 * `tests/run_cases.py` — `tests/cases/*.in` + хүлээгдсэн JSON (ном дахь жишээ, boundary/error кейсүүд)
-* `tests/test_server.py` — HTTP сервер (400 кейс, path traversal, restart, loopback-only bind)
+* `tests/test_server.py` — HTTP сервер, 12 тест (400 кейс, path traversal, restart, loopback-only bind, Ctrl+C-ийн цэвэр shutdown — SIGINT үл тоомсорлогдсон үед ч)
 * `tests/ui/browser_check.py`, `tests/ui/interactions.py` — **заавал биш** Brave/Chromium (CDP) UI шалгалт; `make test`-д ороогүй (`make run`-ийн дараа гараар ажиллуулна, `tests/README.md`)
 
-## AI болон бэлэн кодын ашиглалт (тэмдэглэл)
+## Багийн гүйцэтгэл ба ашигласан хэрэгсэл
 
-* Энэ төслийн эх код, тест, баримт бичгийн ноорог нь **AI агентуудын тусламжтай** бичигдсэн
-  (Anthropic Claude болон OpenAI Codex загварууд дээр суурилсан олон агентын ажлын урсгал:
-  tech lead, developer, qa-reviewer). Код нь автомат тестээр баталгаажсан; багийн гишүүд өөрсдөө
-  уншиж, `make test`-ийг дахин ажиллуулж хянах ёстой. Дэлгэрэнгүйг тайлангийн 5.8 хэсгээс үз.
+Ажлыг дээрх зургаан гишүүн гүйцэтгэсэн. Хувь хүний ажлын хуваарилалт тайлангийн Хавсралт A-д бий.
+AI хэрэгслийг ноорог, код болон шалгалтын ажлын урсгалд туслах хэрэгсэл болгон ашигласан;
+төслийн гүйцэтгэл, эцсийн үр дүнгийн хариуцлага багт хамаарна. Дэлгэрэнгүйг тайлангийн 5.8-аас үз.
+
+## Бэлэн кодын ашиглалт
+
 * Linux-ийн `<linux/list.h>`-ийг **хуулаагүй**; `src/shim/linux/list.h` нь ижил нэр бүхий макроны
   өөрсдийн хэрэгжилт юм. Гуравдагч талын сан ашиглаагүй (зөвхөн C стандарт сан, POSIX, python3 stdlib).
 * Сурах бичгийн snippet-д violet өнгийг `blue=43, green=226` гэж бичсэн нь struct-ийн
   талбарын дараалал (red, blue, green)-тай RGB (138, 43, 226)-г андуурсан байна. Бид зөв утгыг
   (red=138, green=43, blue=226) ашигласан.
-* Нууц түлхүүр, нууц үг, хувийн өгөгдөл репозиторид **байхгүй**.
+* Нууц түлхүүр, нууц үг репозиторид байхгүй; багийн гишүүдийн нэр, оюутны код тайланд бий.
 
 ## Лиценз
 
